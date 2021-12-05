@@ -43,16 +43,17 @@ INSTALLED_APPS = [
     'daily_questions',
 
     #authentication
+     'rest_registration',
     'register_login',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.twitter',
+    # 'rest_framework.authtoken',
+    # 'rest_auth',
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
+    #  'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.twitter',
 
 ]
 
@@ -152,8 +153,9 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'media/emails')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ludhianatechcom@gmail.com'
-EMAIL_HOST_PASSWORD = 'fvmozldcqazvgtim'
+EMAIL_HOST_USER = 'kitabgharweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'mbcpfsgkkclqbcjk'
+
 
 
 STATIC_URL = '/static/'
