@@ -22,6 +22,7 @@ from rest_framework.schemas import get_schema_view
 urlpatterns = [
 
     path('admin/', admin.site.urls),
+     path('accounts/', include('rest_registration.api.urls')),
     path('swagger-ui/', TemplateView.as_view(
         template_name='swagger-ui.html',
         extra_context={'schema_url':'openapi-schema'}
@@ -34,5 +35,4 @@ urlpatterns = [
     path('faq/',include('faq.urls')),
     path('team/',include('team.urls')),
     path('questions/',include('daily_questions.urls')),
-    path('accounts/', include('rest_registration.api.urls')),
 ]
