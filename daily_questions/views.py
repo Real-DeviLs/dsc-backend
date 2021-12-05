@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from register_login.models import UserDetails,UserNames
 from .Utils.gfg.script import fetchResponse as gfg
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 class Daily_QuestionView(APIView):
 
     """ Get track wise daily Questions for the present day """
@@ -19,6 +20,10 @@ class Daily_QuestionView(APIView):
 
 
 class LeaderboardView(APIView):
+
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         ''' Get Leaderboard details '''
@@ -69,7 +74,4 @@ class LeaderboardView(APIView):
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
             return Response(status=e)
-
-
-
 

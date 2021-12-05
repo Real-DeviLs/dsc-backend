@@ -17,3 +17,6 @@ class TwitterLogin(SocialLoginView):
     adapter_class = TwitterOAuthAdapter
 
 
+
+class UserDetailsView:
+    pass
