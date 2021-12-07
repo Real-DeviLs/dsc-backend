@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'faq',
     'team',
     'daily_questions',
-    'register_login',
     'rest_registration',
+    'user_profiles',
 
     #authentication
     # 'rest_framework.authtoken',

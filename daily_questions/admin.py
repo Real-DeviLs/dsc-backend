@@ -9,6 +9,8 @@ class QuestionAdmin(admin.StackedInline):
 
 class Daily_QuestionAdmin(admin.ModelAdmin):
     inlines = [QuestionAdmin,]
+    # def has_change_permission(self, request, obj=None):
+    #     return False
     class Meta:
         model = Daily_Question
 

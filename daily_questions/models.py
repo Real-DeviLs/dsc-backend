@@ -16,13 +16,6 @@ class Daily_Question(models.Model):
     class Meta:
         ordering = ('-date',)
 
-
-# class Platform(models.Model):
-#     name = models.CharField(max_length=100)
-#     url = models.URLField()
-#     def __str__(self):
-#         return self.name
-
 class Track(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
@@ -47,14 +40,8 @@ class Leaderboard(models.Model):
 
     user = models.OneToOneField(User, related_name="leaderboard", on_delete=models.CASCADE)
     questions = models.ManyToManyField(Questions, default=None, blank=True)
-    username = models.CharField(max_length=150, unique=True)
     weekly_score = models.IntegerField(default=0, blank=True)
     daily_score = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return self.user.username
-
-
-# class CronjobConfig(models.Model):
-#     no_of_questions = models.IntegerField(default=2)
-#     platform =

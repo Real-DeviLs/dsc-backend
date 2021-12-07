@@ -4,10 +4,12 @@ from rest_framework.views import APIView
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework import status
-from register_login.models import UserDetails,UserNames
+from user_profiles.models import UserDetail,UserName
 from .Utils.gfg.script import fetchResponse as gfg
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from .Utils import codeforces
+
 class Daily_QuestionView(APIView):
 
     """ Get track wise daily Questions for the present day """
@@ -18,11 +20,12 @@ class Daily_QuestionView(APIView):
         serializer = TrackSerializer(tracks,many=True)
         return Response(serializer.data)
 
+    def post(self, request, *args, **kwargs):
+        pass
 
 class LeaderboardView(APIView):
 
-
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, *args, **kwargs):
@@ -36,23 +39,17 @@ class LeaderboardView(APIView):
         ''' generate Leaderboard from cronjob call '''
     
         questions = Questions.objects.filter(daily_question__date = timezone.now().today())
-        users = UserDetails.objects.all()        
-        
-
+        users = UserDetail.objects.all()        
         try:
-
             for user in users:
-                
                 leaderboard = Leaderboard.objects.filter(user=user.user).first()
-            
                 if leaderboard is None:
                     leaderboard = Leaderboard(user=user.user)
-
-                user_platforms = UserNames.objects.filter(user=user)
+                    leaderboard.save()
+                user_platforms = UserName.objects.filter(user=user)
                 user_names = {}
                 for platform in user_platforms:
-                    
-                    user_names[platform.platform_name]=platform.name
+                    user_names[platform.platform_name]=platform.username
                 
                 if user_names.get('gfg') is not None:
                     gfgset,weekly_score = gfg(user_names.get('gfg')) 
@@ -67,7 +64,9 @@ class LeaderboardView(APIView):
                         pass
 
                     if question.platform == 'cf':
-                        pass
+                        if user_names.get('cf') is not None and question not in leaderboard.questions.all() and codeforces.checkCodechefSubmission(user_names.get('cf'),question.url):
+                            leaderboard.questions.add(question) 
+                            leaderboard.score += question.points
 
                 leaderboard.save()
 

@@ -1,18 +1,18 @@
 from django.contrib import admin
 
-from .models import UserDetails, UserNames
+from .models import UserDetail, UserName
 # Register your models here.
 
 
 
 class UserNamesAdmin(admin.StackedInline):
-    model = UserNames
+    model = UserName
 
 class UserDetailsAdmin(admin.ModelAdmin):
 
     inlines = [UserNamesAdmin,]
 
     class Meta:
-        model = UserDetails
+        model = UserDetail
 
-admin.site.register(UserDetails,UserDetailsAdmin)
+admin.site.register(UserDetail,UserDetailsAdmin)
