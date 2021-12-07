@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserDetail, UserName
+from .models import UserProfile, UserName
 # Register your models here.
 
 
@@ -8,11 +8,11 @@ from .models import UserDetail, UserName
 class UserNamesAdmin(admin.StackedInline):
     model = UserName
 
-class UserDetailsAdmin(admin.ModelAdmin):
+class UserProfilesAdmin(admin.ModelAdmin):
 
     inlines = [UserNamesAdmin,]
 
     class Meta:
-        model = UserDetail
+        model = UserProfile
 
-admin.site.register(UserDetail,UserDetailsAdmin)
+admin.site.register(UserProfile,UserProfilesAdmin)

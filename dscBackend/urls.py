@@ -18,6 +18,13 @@ from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 
+from rest_framework.routers import DefaultRouter
+from user_profiles.views import UserProfileView
+
+routers=DefaultRouter()
+routers.register('user-profile',UserProfileView,basename='user-profile')
+
+
 
 urlpatterns = [
 
@@ -28,12 +35,13 @@ urlpatterns = [
         extra_context={'schema_url': 'openapi-schema'}
     ), name='swagger-ui'),
     path('openapi', get_schema_view(
-        title="Your Project",
+        title="DSC Backend",
         description="API for all things …",
         version="1.0.0"
     ), name='openapi-schema'),
     path('faq/', include('faq.urls')),
     path('team/', include('team.urls')),
     path('questions/', include('daily_questions.urls')),
-    path('user-profile/', include('user_profiles.urls')),
+    path('auth', include('rest_framework.urls')),
+    path('',include(routers.urls)),
 ]

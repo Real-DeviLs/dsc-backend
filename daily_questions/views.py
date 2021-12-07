@@ -4,11 +4,13 @@ from rest_framework.views import APIView
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework import status
-from user_profiles.models import UserDetail,UserName
+from user_profiles.models import UserProfile,UserName
 from .Utils.gfg.script import fetchResponse as gfg
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .Utils import codeforces
+
+
 
 class Daily_QuestionView(APIView):
 
@@ -39,7 +41,7 @@ class LeaderboardView(APIView):
         ''' generate Leaderboard from cronjob call '''
     
         questions = Questions.objects.filter(daily_question__date = timezone.now().today())
-        users = UserDetail.objects.all()        
+        users = UserProfile.objects.all()        
         try:
             for user in users:
                 leaderboard = Leaderboard.objects.filter(user=user.user).first()
