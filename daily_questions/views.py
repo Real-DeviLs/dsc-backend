@@ -1,43 +1,32 @@
 from .models import (Daily_Question,Questions,Leaderboard,Track)
-from .serializers import TrackSerializer,QuestionsSerializer,LeaderboardSerializer
+from .serializers import QuestionsSerializer,LeaderboardSerializer, TrackSerializer
 from rest_framework.views import APIView
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework import status
 from user_profiles.models import UserProfile,UserName
 from .Utils.gfg.script import fetchResponse as gfg
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .Utils import codeforces
+from rest_framework import viewsets
 
 
 
-class Daily_QuestionView(APIView):
+class DailyQuestionsView(viewsets.ModelViewSet):
 
     """ Get track wise daily Questions for the present day """
-    
-    
-    def get(self, request, *args, **kwargs):
-        tracks = Track.objects.filter()
-        serializer = TrackSerializer(tracks,many=True)
-        return Response(serializer.data)
+    queryset = Track.objects.all()
+    serializer_class = TrackSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+ 
 
-    def post(self, request, *args, **kwargs):
-        pass
-
-class LeaderboardView(APIView):
-
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, *args, **kwargs):
-        ''' Get Leaderboard details '''
-
-        leaderboard = Leaderboard.objects.all()
-        serializer = LeaderboardSerializer(leaderboard,many=True)
-        return Response(serializer.data)
-
-    def post(self, request, *args, **kwargs):
+class LeaderboardView(viewsets.ModelViewSet):
+    queryset = Leaderboard.objects.all()
+    serializer_class = LeaderboardSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+ 
+    def perform_create(self, serializer):
         ''' generate Leaderboard from cronjob call '''
     
         questions = Questions.objects.filter(daily_question__date = timezone.now().today())

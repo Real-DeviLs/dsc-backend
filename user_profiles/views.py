@@ -1,9 +1,8 @@
-from django.shortcuts import render
 from .models import UserName,UserProfile
 from rest_framework import viewsets
 from .serializers import UserNameSerializer
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 
 class UserProfileView(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()

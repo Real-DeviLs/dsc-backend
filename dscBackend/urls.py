@@ -20,9 +20,12 @@ from rest_framework.schemas import get_schema_view
 
 from rest_framework.routers import DefaultRouter
 from user_profiles.views import UserProfileView
+from daily_questions.views import DailyQuestionsView, LeaderboardView
 
 routers=DefaultRouter()
 routers.register('user-profile',UserProfileView,basename='user-profile')
+routers.register('daily-questions',DailyQuestionsView,basename='daily-questions')
+routers.register('leaderboard',LeaderboardView,basename='leaderboard')
 
 
 
